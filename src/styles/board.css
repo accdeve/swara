@@ -1,0 +1,95 @@
+/* Flat 2D Board Styling (Borderless & Static Direction Rings) */
+
+.board-container {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.surakarta-svg {
+  display: block;
+}
+
+/* Flat Loop Paths */
+.flat-loop-path {
+  transition: stroke 0.15s ease;
+}
+
+.flat-loop-path:hover {
+  stroke: #4A6E99;
+}
+
+/* 2D Flat Pieces (Tanpa Animasi Mengganggu) */
+.piece {
+  transition: transform 0.15s ease-out;
+  transform-origin: center;
+}
+
+.piece:hover {
+  transform: scale(1.08);
+}
+
+.piece.is-selected {
+  transform: scale(1.1);
+}
+
+/* Lingkaran Putus-Putus STATIS saat bidak dipilih */
+.static-selection-ring {
+  /* Murni statis, tidak ada animasi rotasi/pulsing */
+}
+
+/* Indikator Arah Langkah STATIS */
+.static-move-ring {
+  cursor: pointer;
+}
+
+.static-capture-ring {
+  cursor: pointer;
+}
+
+/* Jejak Garis Trail (Statis Lembut) */
+.flat-trail-line {
+  opacity: 0.9;
+}
+
+/* Animasi Gerak Bidak Meluncur (Capture & Regular Glide) */
+.piece-in-flight {
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.22));
+}
+
+.piece-hidden-origin {
+  opacity: 0 !important;
+}
+
+.flight-glow-trail {
+  pointer-events: none;
+}
+
+.capture-impact-pulse {
+  animation: impactPulse 0.4s ease-out forwards;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+@keyframes impactPulse {
+  0% {
+    r: 10;
+    opacity: 0.9;
+  }
+  50% {
+    r: 28;
+    opacity: 0.6;
+  }
+  100% {
+    r: 36;
+    opacity: 0;
+  }
+}
+

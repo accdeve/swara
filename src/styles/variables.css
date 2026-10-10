@@ -1,0 +1,54 @@
+/* Pure Pastel Color Tokens (Harmonious, Soft, High Aesthetic) */
+
+:root {
+  /* Canvas & Soft Surfaces */
+  --bg-app: #F5F7FA;
+  --surface-card: #FFFFFF;
+  --surface-board: #FAF9F6;
+  --surface-board-inner: #F1F4F8;
+
+  /* Pastel Player 1 (Soft Sky Slate) */
+  --p1-pastel: #7296C2;
+  --p1-pastel-dark: #4A6E99;
+  --p1-pastel-bg: #EDF4FA;
+  --p1-pastel-active: #DDEBF7;
+
+  /* Pastel Player 2 (Soft Coral Peach) */
+  --p2-pastel: #E68E8B;
+  --p2-pastel-dark: #C96B68;
+  --p2-pastel-bg: #FDF2F1;
+  --p2-pastel-active: #FBE4E3;
+
+  /* Pastel Educational & Info Tones */
+  --pastel-yellow: #F4C76C;
+  --pastel-yellow-bg: #FEF9EC;
+  --pastel-yellow-dark: #925804;
+
+  --pastel-mint: #82CFA9;
+  --pastel-mint-bg: #EEF9F3;
+  --pastel-mint-dark: #1E6B46;
+
+  --pastel-blue-banner: #798CB0;
+  --pastel-grid-line: #BAC7D8;
+  --pastel-grid-subtle: #DCE4ED;
+
+  /* Typography */
+  --text-main: #334155;
+  --text-muted: #64748B;
+  --text-subtle: #94A3B8;
+  --text-white: #FFFFFF;
+
+  /* Pure Soft Elevation */
+  --shadow-pastel: 0 4px 16px rgba(100, 116, 139, 0.06);
+  --shadow-card: 0 8px 24px rgba(100, 116, 139, 0.08);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Font */
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --transition-smooth: all 0.2s ease;
+}

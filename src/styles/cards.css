@@ -1,0 +1,379 @@
+/* Authentic Children's Educational Flashcard Styling (Tactile & Non-AI-Slop) */
+
+.card-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 55, 72, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: flatFadeIn 0.15s ease;
+}
+
+.card-modal-frame {
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-top-bar {
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.player-turn-flat-tag {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: var(--radius-xs);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+}
+
+.badge-p1-flat {
+  background: var(--p1-main);
+  color: #FFFFFF;
+}
+
+.badge-p2-flat {
+  background: var(--p2-main);
+  color: #FFFFFF;
+}
+
+.modal-instruction {
+  font-size: 13px;
+  color: #F1F5F9;
+  margin: 0;
+}
+
+/* Flashcard 3D/2D Viewport */
+.card-flip-viewport {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 480px;
+  height: 520px;
+  max-height: 84vh;
+}
+
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-in-out;
+}
+
+.card-flip-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* Flashcard Body (Physical Printed Flashcard Look) */
+.card-2d-sheet {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 0 #D5CBB8;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+/* SISI DEPAN: KARTU BIRU (ILUSTRASI) */
+.sheet-blue {
+  background: #FFFFFF;
+}
+
+.header-blue {
+  background: var(--card-blue-banner);
+  color: #FFFFFF;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheet-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sheet-brand {
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.sheet-number {
+  font-size: 11.5px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.sheet-category-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.22);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+}
+
+.sheet-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: #FFFFFF;
+  overflow-y: auto;
+}
+
+.illustration-container {
+  width: 100%;
+  height: 150px;
+  background: var(--surface-paper);
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.illustration-media {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.question-container {
+  margin-bottom: 12px;
+}
+
+.question-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Tactile Response Buttons */
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.flat-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--surface-paper);
+  border: none;
+  border-radius: var(--radius-xs);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2.5px 0 #DDD6C8;
+  transition: var(--transition-tactile);
+}
+
+.flat-option-btn:hover:not(:disabled) {
+  background: var(--surface-tray-p1);
+  box-shadow: 0 2.5px 0 var(--p1-lip);
+}
+
+.flat-option-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 0.5px 0 #DDD6C8;
+}
+
+.flat-option-btn.selected {
+  background: var(--surface-tray-p1);
+  box-shadow: 0 1px 0 var(--p1-lip);
+}
+
+.opt-key {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-xs);
+  background: #FFFFFF;
+  color: var(--text-main);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1.5px 0 #DDD6C8;
+}
+
+.flat-option-btn:hover:not(:disabled) .opt-key {
+  background: var(--p1-main);
+  color: #FFFFFF;
+  box-shadow: 0 1.5px 0 var(--p1-dark);
+}
+
+.opt-desc {
+  font-size: 12.5px;
+  color: var(--text-main);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* SISI BELAKANG: KARTU KUNING (EDUKASI) */
+.sheet-yellow {
+  background: #FFFFFF;
+  transform: rotateY(180deg);
+}
+
+.header-yellow {
+  background: var(--card-yellow-banner);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheet-brand-dark {
+  font-size: 14px;
+  font-weight: 800;
+  color: #573602;
+  letter-spacing: 0.5px;
+}
+
+.sheet-number-dark {
+  font-size: 12px;
+  font-weight: 700;
+  color: #573602;
+  opacity: 0.9;
+}
+
+.btn-close-card {
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-xs);
+  font-size: 18px;
+  font-weight: 800;
+  color: #573602;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+  transition: var(--transition-tactile);
+}
+
+.btn-close-card:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.result-status-box {
+  padding: 10px 14px;
+  border-radius: var(--radius-xs);
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.status-correct {
+  background: var(--safe-mint-bg);
+  color: #1A5938;
+}
+
+.status-incorrect {
+  background: var(--star-gold-bg);
+  color: #7A4C05;
+}
+
+.education-content-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+.edu-media-box {
+  width: 100%;
+  height: 130px;
+  background: var(--surface-paper);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edu-media {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.edu-heading {
+  font-size: 15px;
+  font-weight: 800;
+  color: #573602;
+  margin-bottom: 4px;
+}
+
+.edu-text-paper {
+  background: var(--star-gold-bg);
+  border-radius: var(--radius-xs);
+  padding: 12px;
+  text-align: left;
+}
+
+.edu-text-paper p {
+  font-size: 13px;
+  color: #573602;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.sheet-footer {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.btn-continue-flat {
+  width: 100%;
+  padding: 11px;
+  background: var(--star-gold);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-xs);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--star-gold-lip);
+  transition: var(--transition-tactile);
+}
+
+.btn-continue-flat:hover {
+  background: #CC840E;
+}
+
+.btn-continue-flat:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--star-gold-lip);
+}
+
+@keyframes flatFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,0 +1,763 @@
+/* Pure Pastel UI & Children Game Layout (Harmonious & Anti AI-Slop) */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1320px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 16px 20px;
+}
+
+/* Header Navbar (Pure Pastel) */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-pastel);
+  margin-bottom: 18px;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo-img {
+  height: 40px;
+  border-radius: 8px;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--p1-pastel-dark);
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+
+.brand-tagline {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Mode Switcher (Soft Pastel Pill) */
+.mode-select-box {
+  display: flex;
+  background: #EAF0F6;
+  padding: 3px;
+  border-radius: var(--radius-full);
+}
+
+.btn-mode {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-mode.active {
+  background: #FFFFFF;
+  color: var(--p1-pastel-dark);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #EAF0F6;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-icon:hover {
+  background: #DFE8F2;
+}
+
+.btn-text-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: #EAF0F6;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-text-action:hover {
+  background: #DFE8F2;
+}
+
+/* Main Layout Grid */
+.main-game-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .main-game-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Board Arena Card */
+.board-arena-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-pastel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Sidebar & Pure Pastel Stack */
+.game-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pastel-sidebar-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Player Cards (Soft Pastel) */
+.pastel-player-card {
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: var(--transition-smooth);
+}
+
+.p1-card {
+  background: var(--p1-pastel-bg);
+}
+
+.p2-card {
+  background: var(--p2-pastel-bg);
+}
+
+.p1-card.is-active {
+  background: var(--p1-pastel-active);
+  outline: 2.5px solid var(--p1-pastel);
+}
+
+.p2-card.is-active {
+  background: var(--p2-pastel-active);
+  outline: 2.5px solid var(--p2-pastel);
+}
+
+.player-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-icon-bubble {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.player-name-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.player-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.player-label {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.btn-edit-name {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px;
+  opacity: 0.65;
+  transition: var(--transition-smooth);
+}
+
+.btn-edit-name:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.player-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.player-score-group {
+  display: flex;
+  gap: 6px;
+}
+
+.score-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.star-chip .chip-val {
+  color: var(--pastel-yellow-dark);
+}
+
+.piece-chip .chip-val {
+  color: var(--text-main);
+}
+
+/* Unified Pastel Info Board */
+.pastel-info-board {
+  background: var(--surface-card);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-pastel);
+  display: flex;
+  flex-direction: column;
+}
+
+.turn-status-banner {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.turn-status-banner.turn-p1 {
+  background: var(--p1-pastel-bg);
+  color: var(--p1-pastel-dark);
+}
+
+.turn-status-banner.turn-p2 {
+  background: var(--p2-pastel-bg);
+  color: var(--p2-pastel-dark);
+}
+
+.turn-hint-text {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.deck-indicator-row {
+  background: var(--pastel-yellow-bg);
+  color: var(--pastel-yellow-dark);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Quick Action Sidebar Cards (Pure Pastel) */
+.quick-actions-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  box-shadow: var(--shadow-pastel);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-sidebar-action {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--p1-pastel-bg);
+  color: var(--p1-pastel-dark);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+}
+
+.btn-sidebar-action:hover {
+  background: var(--p1-pastel-active);
+}
+
+#btnSidebarCardsInfo {
+  background: var(--pastel-yellow-bg);
+  color: var(--pastel-yellow-dark);
+}
+
+#btnSidebarCardsInfo:hover {
+  background: #FDF0D5;
+}
+
+/* Modals General */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(45, 55, 72, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: flatFadeIn 0.15s ease;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: flex !important;
+}
+
+/* Tutorial & 10 Cards Information Modal (Pure Pastel Layout) */
+.tutorial-modal-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  max-width: 620px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.tutorial-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: #F3F6FA;
+}
+
+.tutorial-tab-bar {
+  display: flex;
+  gap: 6px;
+}
+
+.tab-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.tab-btn.active {
+  background: var(--p1-pastel-dark);
+  color: #FFFFFF;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.tutorial-content-scroll {
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tutorial-step-card {
+  background: #F8FAFD;
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.step-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: #E2E8F0;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.highlight-badge {
+  background: var(--pastel-yellow-bg);
+  color: var(--pastel-yellow-dark);
+}
+
+.tutorial-step-card h3 {
+  font-size: 14.5px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+.tutorial-step-card p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* 10 Cards Information List (Pure Pastel Cards) */
+.cards-gallery-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-gallery-item {
+  background: #F8FAFD;
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gallery-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gallery-badge-blue {
+  font-size: 11px;
+  font-weight: 800;
+  background: var(--p1-pastel-bg);
+  color: var(--p1-pastel-dark);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.gallery-category {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.gallery-item-body {
+  display: flex;
+  gap: 12px;
+}
+
+.gallery-img-thumb {
+  width: 85px;
+  height: 85px;
+  border-radius: var(--radius-xs);
+  background: #FFFFFF;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.gallery-img-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.gallery-text-info {
+  flex: 1;
+}
+
+.gallery-text-info h4 {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.gallery-q {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+
+.gallery-answer-box {
+  background: var(--pastel-yellow-bg);
+  border-radius: var(--radius-xs);
+  padding: 6px 10px;
+  font-size: 11.5px;
+  color: var(--pastel-yellow-dark);
+}
+
+.gallery-answer-box p {
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+.tutorial-footer {
+  padding: 12px 18px;
+  background: #F3F6FA;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-primary-pastel {
+  padding: 9px 20px;
+  background: var(--p1-pastel-dark);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-primary-pastel:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary-pastel {
+  padding: 9px 20px;
+  background: #E2E8F0;
+  color: var(--text-main);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-secondary-pastel:hover {
+  background: #CBD5E1;
+}
+
+/* GameOver Modal (Pure Pastel) */
+.gameover-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  max-width: 460px;
+  width: 100%;
+  padding: 26px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trophy-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.gameover-title {
+  font-size: 21px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.winner-p1 .gameover-title { color: var(--p1-pastel-dark); }
+.winner-p2 .gameover-title { color: var(--p2-pastel-dark); }
+
+.gameover-reason-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: #F3F6FA;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+}
+
+.gameover-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  line-height: 1.4;
+}
+
+.final-score-recap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.score-card-box {
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.p1-box {
+  background: var(--p1-pastel-bg);
+}
+
+.p2-box {
+  background: var(--p2-pastel-bg);
+}
+
+.score-player-name {
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.score-num-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 14.5px;
+  font-weight: 800;
+}
+
+.stars-val { color: var(--pastel-yellow-dark); }
+.pieces-val { color: var(--text-main); }
+
+/* NameModal Styling */
+.name-modal-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  animation: flatFadeIn 0.15s ease;
+}
+
+.name-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  background: #F3F6FA;
+}
+
+.name-modal-body {
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.name-input-label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.name-text-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--pastel-grid-line);
+  font-family: var(--font-family);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  background: #FFFFFF;
+  outline: none;
+  transition: var(--transition-smooth);
+}
+
+.name-text-input:focus {
+  border-color: var(--p1-pastel);
+  box-shadow: 0 0 0 3px rgba(114, 150, 194, 0.2);
+}
+
+.name-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+@keyframes flatFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
