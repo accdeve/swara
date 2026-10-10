@@ -7,8 +7,9 @@ export const CARDS_DATA = [
   {
     id: 1,
     category: "Pelanggaran Batasan & Manipulasi Rahasia",
-    frontImage: "/assets/cards/page_01.png",
-    backImage: "/assets/cards/page_11.png",
+    frontImage: "/assets/cards/card_01_front.png",
+    backImage: "/assets/cards/card_01_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Rahasia yang Mencurigakan",
     question: "Seseorang menyuruhmu merahasiakan suatu hal yang membuatmu merasa takut, bingung, atau tidak nyaman. Apa yang sebaiknya kamu lakukan?",
     options: [
@@ -23,8 +24,9 @@ export const CARDS_DATA = [
   {
     id: 2,
     category: "Pelecehan Verbal & Komentar Fisik",
-    frontImage: "/assets/cards/page_02.png",
-    backImage: "/assets/cards/page_12.png",
+    frontImage: "/assets/cards/card_02_front.png",
+    backImage: "/assets/cards/card_02_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Komentar Fisik / Body Shaming",
     question: "Seseorang mengejek atau mengomentari fisikmu: 'Kamu kok kurus banget sih? Jelek deh!' Bagaimana respon terbaikmu?",
     options: [
@@ -39,8 +41,9 @@ export const CARDS_DATA = [
   {
     id: 3,
     category: "Sentuhan Tidak Aman (Kekerasan Fisik)",
-    frontImage: "/assets/cards/page_03.png",
-    backImage: "/assets/cards/page_13.png",
+    frontImage: "/assets/cards/card_03_front.png",
+    backImage: "/assets/cards/card_03_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Dicubit Kencang & Disengaja",
     question: "Seseorang mencubit pipimu dengan kencang secara sengaja hingga terasa sakit dan kamu tidak suka. Apa tindakanmu?",
     options: [
@@ -55,8 +58,9 @@ export const CARDS_DATA = [
   {
     id: 4,
     category: "Pelanggaran Batasan & Konsen Tubuh",
-    frontImage: "/assets/cards/page_04.png",
-    backImage: "/assets/cards/page_14.png",
+    frontImage: "/assets/cards/card_04_front.png",
+    backImage: "/assets/cards/card_04_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Dipeluk Tanpa Meminta Izin",
     question: "Seseorang (meskipun orang yang kamu kenal) tiba-tiba memelukmu tanpa meminta izin dan kamu merasa tidak nyaman. Apa yang harus kamu lakukan?",
     options: [
@@ -71,8 +75,9 @@ export const CARDS_DATA = [
   {
     id: 5,
     category: "Sentuhan Aman (Etika & Batasan)",
-    frontImage: "/assets/cards/page_05.png",
-    backImage: "/assets/cards/page_15.png",
+    frontImage: "/assets/cards/card_05_front.png",
+    backImage: "/assets/cards/card_05_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Berjabat Tangan Wajar",
     question: "Seseorang mengajakmu berjabat tangan saat berkenalan secara sopan. Apakah situasi ini sentuhan aman, dan bagaimana hakmu?",
     options: [
@@ -87,8 +92,9 @@ export const CARDS_DATA = [
   {
     id: 6,
     category: "Sentuhan Aman (Kasih Sayang Wajar)",
-    frontImage: "/assets/cards/page_06.png",
-    backImage: "/assets/cards/page_16.png",
+    frontImage: "/assets/cards/card_06_front.png",
+    backImage: "/assets/cards/card_06_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Dielus Kepalanya",
     question: "Orang terdekat (guru/keluarga) mengelus kepalamu sebagai bentuk apresiasi wajar. Bagaimana kamu menyikapinya?",
     options: [
@@ -103,8 +109,9 @@ export const CARDS_DATA = [
   {
     id: 7,
     category: "Pelecehan Visual & Konten Terlarang",
-    frontImage: "/assets/cards/page_07.png",
-    backImage: "/assets/cards/page_17.png",
+    frontImage: "/assets/cards/card_07_front.png",
+    backImage: "/assets/cards/card_07_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Ditunjukkan Foto/Video Tidak Senonoh",
     question: "Seseorang menunjukkan foto atau video tidak senonoh / pornografi kepadamu melalui ponselnya. Apa langkah yang benar?",
     options: [
@@ -119,8 +126,9 @@ export const CARDS_DATA = [
   {
     id: 8,
     category: "Pelanggaran Batasan Pribadi",
-    frontImage: "/assets/cards/page_08.png",
-    backImage: "/assets/cards/page_18.png",
+    frontImage: "/assets/cards/card_08_front.png",
+    backImage: "/assets/cards/card_08_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Dirangkul Tiba-Tiba",
     question: "Seseorang merangkul pundakmu secara tiba-tiba tanpa persetujuan dan membuatmu merasa risih/takut. Apa tindakanmu?",
     options: [
@@ -135,8 +143,9 @@ export const CARDS_DATA = [
   {
     id: 9,
     category: "Interaksi Sosial Aman (Kewaspadaan Diri)",
-    frontImage: "/assets/cards/page_09.png",
-    backImage: "/assets/cards/page_19.png",
+    frontImage: "/assets/cards/card_09_front.png",
+    backImage: "/assets/cards/card_09_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Mengobrol dengan Jarak Wajar",
     question: "Kamu sedang mengobrol biasa dengan seseorang di tempat terbuka dengan jarak yang wajar. Bagaimana penilaian situasinya?",
     options: [
@@ -151,8 +160,9 @@ export const CARDS_DATA = [
   {
     id: 10,
     category: "Penyalahgunaan Otoritas & Perintah Terlarang",
-    frontImage: "/assets/cards/page_10.png",
-    backImage: "/assets/cards/page_20.png",
+    frontImage: "/assets/cards/card_10_front.png",
+    backImage: "/assets/cards/card_10_edu.png",
+    coverImage: "/assets/cards/card_blue_back.png",
     title: "Perintah Melanggar Batas Tubuh",
     question: "Seseorang yang lebih tua memerintahkanmu melakukan sesuatu yang melanggar batas tubuh atau privasimu secara rahasia. Apa tindakanmu?",
     options: [

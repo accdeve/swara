@@ -24,6 +24,7 @@ export class CardModal {
     this.player = player;
     this.playerName = playerName;
     this.isFlipped = false;
+    this.hasAnswered = false;
     this.render();
     this.container.classList.remove('hidden');
     this.container.classList.add('visible');
@@ -36,6 +37,7 @@ export class CardModal {
     this.container.innerHTML = '';
     this.activeCard = null;
     this.isFlipped = false;
+    this.hasAnswered = false;
   }
 
   closeAndProceed() {
@@ -45,8 +47,29 @@ export class CardModal {
     }
   }
 
+  toggleFlip() {
+    this.isFlipped = !this.isFlipped;
+    const cardInner = this.container.querySelector('.card-flip-inner');
+    if (cardInner) {
+      if (this.isFlipped) {
+        cardInner.classList.add('is-flipped');
+      } else {
+        cardInner.classList.remove('is-flipped');
+      }
+    }
+    audioManager.playCardFlip();
+  }
+
   flipToBack(isCorrect, selectedOptionId) {
+    this.hasAnswered = true;
     this.isFlipped = true;
+    
+    // Pastikan sisi edukasi aktif di belakang
+    const sheetBackCover = this.container.querySelector('#sheetBlueBack');
+    const sheetYellow = this.container.querySelector('#sheetYellow');
+    if (sheetBackCover) sheetBackCover.style.display = 'none';
+    if (sheetYellow) sheetYellow.style.display = 'flex';
+
     const cardInner = this.container.querySelector('.card-flip-inner');
     if (cardInner) {
       cardInner.classList.add('is-flipped');
@@ -103,11 +126,14 @@ export class CardModal {
                     <span class="sheet-number">#${card.id}</span>
                     <span class="sheet-player-tag ${playerBadgeClass}">🎯 ${playerBadgeText}</span>
                   </div>
-                  <span class="sheet-category-pill">${card.category}</span>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="sheet-category-pill">${card.category}</span>
+                    <button class="btn-flip-card" id="btnFlipPreview" title="Lihat Sisi Belakang">🔄 Belakang</button>
+                  </div>
                 </div>
 
                 <div class="sheet-body">
-                  <!-- Ilustrasi Asli Gambar Skenario -->
+                  <!-- Ilustrasi Asli Gambar Skenario (HD, Tanpa Kotak Border/Background) -->
                   <div class="illustration-container">
                     <img src="${card.frontImage}" alt="${card.title}" class="illustration-media" />
                   </div>
@@ -130,8 +156,29 @@ export class CardModal {
 
               </div>
 
-              <!-- SISI BELAKANG: KARTU EDUKASI (KUNING PASTEL) -->
-              <div class="card-2d-sheet sheet-yellow">
+              <!-- SISI BELAKANG COVER: KARTU COVER BIRU (SEBELUM DIJAWAB) -->
+              <div class="card-2d-sheet sheet-blue-back" id="sheetBlueBack" style="${this.hasAnswered ? 'display: none;' : ''}">
+                <div class="sheet-header header-blue">
+                  <div class="sheet-title-group">
+                    <span class="sheet-brand">SWARA</span>
+                    <span class="sheet-number">SISI BELAKANG KARTU</span>
+                  </div>
+                  <button class="btn-flip-card-back" id="btnFlipBackToFront">↻ Sisi Depan</button>
+                </div>
+
+                <div class="sheet-body cover-body">
+                  <div class="cover-container">
+                    <img src="${card.coverImage || '/assets/cards/card_blue_back.png'}" alt="Cover Belakang SWARA" class="cover-media" />
+                  </div>
+                  <p class="cover-caption">Kartu Skenario Edukasi SWARA — Sentuhan Aman & Batasan Diri</p>
+                  <button class="btn-primary-pastel btn-cover-proceed" id="btnProceedToQuestion">
+                    Jawab Pertanyaan ➔
+                  </button>
+                </div>
+              </div>
+
+              <!-- SISI BELAKANG: KARTU EDUKASI (KUNING PASTEL - SETELAH DIJAWAB) -->
+              <div class="card-2d-sheet sheet-yellow" id="sheetYellow" style="${this.hasAnswered ? 'display: flex;' : 'display: none;'}">
                 
                 <div class="sheet-header header-yellow">
                   <div class="sheet-title-group">
@@ -224,6 +271,32 @@ export class CardModal {
         }
       });
     });
+
+    // Tombol Balik Kartu (Lihat Cover Belakang)
+    const flipPreviewBtn = this.container.querySelector('#btnFlipPreview');
+    if (flipPreviewBtn) {
+      flipPreviewBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleFlip();
+      });
+    }
+
+    // Tombol Balik ke Depan dari Cover Belakang
+    const flipBackToFrontBtn = this.container.querySelector('#btnFlipBackToFront');
+    if (flipBackToFrontBtn) {
+      flipBackToFrontBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleFlip();
+      });
+    }
+
+    const proceedToQBtn = this.container.querySelector('#btnProceedToQuestion');
+    if (proceedToQBtn) {
+      proceedToQBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleFlip();
+      });
+    }
 
     // Tombol Lanjutkan Permainan
     const continueBtn = this.container.querySelector('#btnContinueGame');
