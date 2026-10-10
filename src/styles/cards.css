@@ -10,22 +10,27 @@
   z-index: 1000;
   padding: 16px;
   animation: flatFadeIn 0.2s ease;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
 }
 
-.card-modal-frame {
+.card-modal-dialog {
   width: 100%;
-  max-width: 580px;
+  max-width: 680px;
+  max-height: 90vh;
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 36px rgba(50, 70, 95, 0.2);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  overflow: hidden;
   animation: cardPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border: 2px solid #D6E4F0;
 }
 
 @keyframes cardPopIn {
   0% {
     opacity: 0;
-    transform: translateY(22px) scale(0.94);
+    transform: translateY(20px) scale(0.95);
   }
   100% {
     opacity: 1;
@@ -33,50 +38,8 @@
   }
 }
 
-/* Flashcard 3D/2D Viewport & Flip Container (Ukuran Lebih Besar & Megah) */
-.card-flip-viewport {
-  perspective: 1400px;
-  width: 100%;
-  max-width: 580px;
-  height: 640px;
-  max-height: 90vh;
-}
-
-.card-flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 12px 28px rgba(74, 94, 122, 0.16));
-}
-
-.card-flip-inner.is-flipped {
-  transform: rotateY(180deg);
-  filter: drop-shadow(0 14px 32px rgba(138, 82, 0, 0.16));
-}
-
-/* Flashcard Body Sheets (Sisi Depan & Belakang) */
-.card-2d-sheet {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: #FFFFFF;
-  box-shadow: 0 4px 16px rgba(100, 116, 139, 0.08);
-}
-
-/* SISI DEPAN: KARTU BIRU (ILUSTRASI) */
-.sheet-blue {
-  background: #FFFFFF;
-  border: 2px solid #D6E4F0;
-}
-
-.header-blue {
+/* Modal Header (Static & Always Upright) */
+.card-modal-header {
   background: var(--p1-pastel);
   color: #FFFFFF;
   padding: 14px 20px;
@@ -84,9 +47,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-shrink: 0;
 }
 
-.sheet-title-group {
+.card-modal-header.header-peach {
+  background: var(--p2-pastel);
+}
+
+.header-left {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -114,6 +82,12 @@
   color: #FFFFFF;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .sheet-category-pill {
   font-size: 11.5px;
   font-weight: 700;
@@ -123,127 +97,192 @@
   white-space: nowrap;
 }
 
-.sheet-body {
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  background: #FFFFFF;
-  overflow-y: auto;
-}
-
-.illustration-container {
-  width: 100%;
-  max-height: 250px;
-  background: transparent;
-  border-radius: 0;
+.btn-close-card {
+  background: rgba(255, 255, 255, 0.35);
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  font-size: 17px;
+  font-weight: 800;
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: visible;
-  margin-bottom: 12px;
+  cursor: pointer;
+  line-height: 1;
+  transition: var(--transition-tactile);
+}
+
+.btn-close-card:hover {
+  background: rgba(255, 255, 255, 0.65);
+  transform: scale(1.1);
+}
+
+/* Modal Main Body (2 Columns Layout) */
+.card-modal-main {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 20px;
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+@media (max-width: 640px) {
+  .card-modal-main {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Column 1: Card 3D Flip (HANYA INI YANG BERBALIK 3D) */
+.card-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   flex-shrink: 0;
-  border: none;
 }
 
-.illustration-media {
-  max-height: 250px;
-  width: auto;
-  max-width: 100%;
+.card-3d-scene {
+  width: 210px;
+  height: 340px;
+  perspective: 1200px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card-3d-flipper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-3d-flipper.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-face-front {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.card-face-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+.card-standalone-img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 8px 18px rgba(74, 94, 122, 0.16));
-  border-radius: 0;
-  transition: transform 0.25s ease;
+  filter: drop-shadow(0 8px 18px rgba(50, 70, 95, 0.16));
+  transition: transform 0.25s ease, filter 0.25s ease;
 }
 
-.illustration-media:hover {
-  transform: scale(1.02);
+.card-3d-scene:hover .card-standalone-img {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 12px 24px rgba(50, 70, 95, 0.22));
 }
 
-.btn-flip-card, .btn-flip-card-back {
-  background: rgba(255, 255, 255, 0.25);
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  color: #FFFFFF;
-  font-size: 11.5px;
+.btn-toggle-flip {
+  background: var(--surface-paper);
+  border: 1.5px solid #CBD5E1;
+  color: var(--text-main);
+  font-size: 12px;
   font-weight: 700;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: var(--radius-full);
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  box-shadow: 0 2px 0 #CBD5E1;
   transition: var(--transition-tactile);
 }
 
-.btn-flip-card:hover, .btn-flip-card-back:hover {
-  background: rgba(255, 255, 255, 0.4);
-  transform: scale(1.04);
+.btn-toggle-flip:hover {
+  background: var(--p1-pastel-bg);
+  border-color: var(--p1-pastel);
+  color: var(--p1-dark);
+  transform: translateY(-1px);
 }
 
-.sheet-blue-back {
-  background: #FFFFFF;
-  transform: rotateY(180deg);
-  border: 2px solid #D6E4F0;
+.btn-toggle-flip:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #CBD5E1;
 }
 
-.cover-body {
-  padding: 20px;
+/* Column 2: Content (Selalu Tegak, Tidak Berbalik) */
+.content-column {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-between;
+  min-width: 0;
 }
 
-.cover-container {
-  width: 100%;
-  max-height: 380px;
+/* Phase 1: Pertanyaan & Opsi */
+.phase-question {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
 }
 
-.cover-media {
-  max-height: 380px;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 24px rgba(74, 94, 122, 0.22));
-}
-
-.cover-caption {
-  font-size: 13.5px;
-  font-weight: 600;
+.scenario-label {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   color: var(--text-muted);
-  margin-bottom: 16px;
+  margin-bottom: 4px;
 }
 
 .question-container {
-  margin-bottom: 14px;
+  background: var(--surface-paper);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  border: 1.5px solid #E2E8F0;
 }
 
 .question-text {
-  font-size: 15.5px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--text-main);
   line-height: 1.48;
   margin: 0;
 }
 
-/* Animasi Pilihan Respon / Options */
+/* Options */
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
   margin-top: auto;
 }
 
 .flat-option-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: 10px;
+  padding: 10px 14px;
   background: var(--surface-paper);
   border: 1.5px solid #E2E8F0;
   border-radius: var(--radius-sm);
@@ -251,17 +290,17 @@
   cursor: pointer;
   box-shadow: 0 2.5px 0 #CBD5E1;
   transition: var(--transition-tactile);
-  animation: optionSlideIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation: optionSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
-.flat-option-btn:nth-child(1) { animation-delay: 0.05s; }
-.flat-option-btn:nth-child(2) { animation-delay: 0.12s; }
-.flat-option-btn:nth-child(3) { animation-delay: 0.19s; }
+.flat-option-btn:nth-child(1) { animation-delay: 0.04s; }
+.flat-option-btn:nth-child(2) { animation-delay: 0.1s; }
+.flat-option-btn:nth-child(3) { animation-delay: 0.16s; }
 
 @keyframes optionSlideIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -272,7 +311,7 @@
 .flat-option-btn:hover:not(:disabled) {
   background: var(--p1-pastel-bg);
   border-color: var(--p1-pastel);
-  box-shadow: 0 3.5px 0 var(--p1-lip);
+  box-shadow: 0 3px 0 var(--p1-lip);
   transform: translateY(-2px);
 }
 
@@ -287,11 +326,10 @@
   box-shadow: 0 1px 0 var(--p1-lip);
 }
 
-/* Feedback Animasi Saat Opsi Dipilih */
 .flat-option-btn.is-correct {
   background: var(--pastel-mint-bg) !important;
   border-color: var(--pastel-mint) !important;
-  box-shadow: 0 3.5px 0 #6BB892 !important;
+  box-shadow: 0 3px 0 #6BB892 !important;
   animation: pulseCorrect 0.4s ease;
 }
 
@@ -304,7 +342,7 @@
 .flat-option-btn.is-wrong {
   background: var(--p2-pastel-bg) !important;
   border-color: var(--p2-pastel) !important;
-  box-shadow: 0 3.5px 0 #D17C79 !important;
+  box-shadow: 0 3px 0 #D17C79 !important;
   animation: shakeSoft 0.4s ease;
 }
 
@@ -333,12 +371,12 @@
 }
 
 .opt-key {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: var(--radius-xs);
   background: #FFFFFF;
   color: var(--text-main);
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 800;
   display: flex;
   align-items: center;
@@ -348,87 +386,26 @@
   transition: var(--transition-tactile);
 }
 
-.flat-option-btn:hover:not(:disabled) .opt-key {
-  background: var(--p1-pastel);
-  color: #FFFFFF;
-  box-shadow: 0 1.5px 0 var(--p1-dark);
-}
-
 .opt-desc {
-  font-size: 13.5px;
+  font-size: 13px;
   color: var(--text-main);
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.38;
 }
 
-/* SISI BELAKANG: KARTU KUNING (EDUKASI) */
-.sheet-yellow {
-  background: #FFFFFF;
-  transform: rotateY(180deg);
-  border: 2px solid #F8E7C0;
-}
-
-.header-yellow {
-  background: var(--pastel-yellow);
-  padding: 14px 20px;
+/* Phase 2: Hasil & Penjelasan Edukasi */
+.phase-education {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sheet-brand-dark {
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--pastel-yellow-dark);
-  letter-spacing: 0.5px;
-}
-
-.sheet-number-dark {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--pastel-yellow-dark);
-  opacity: 0.95;
-}
-
-.btn-close-card {
-  background: rgba(255, 255, 255, 0.45);
-  border: none;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-full);
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--pastel-yellow-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  line-height: 1;
-  transition: var(--transition-tactile);
-}
-
-.btn-close-card:hover {
-  background: rgba(255, 255, 255, 0.75);
-  transform: scale(1.1);
-}
-
-/* Animasi Muncul Konten Sisi Belakang */
-.card-flip-inner.is-flipped .sheet-yellow .result-status-box {
-  animation: eduReveal 0.4s 0.15s ease backwards;
-}
-
-.card-flip-inner.is-flipped .sheet-yellow .education-content-box {
-  animation: eduReveal 0.45s 0.22s ease backwards;
-}
-
-.card-flip-inner.is-flipped .sheet-yellow .sheet-footer {
-  animation: eduReveal 0.45s 0.3s ease backwards;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  animation: eduReveal 0.35s ease backwards;
 }
 
 @keyframes eduReveal {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -437,11 +414,10 @@
 }
 
 .result-status-box {
-  padding: 11px 16px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
   font-size: 13.5px;
   text-align: center;
-  margin-bottom: 12px;
 }
 
 .status-correct {
@@ -457,46 +433,24 @@
 }
 
 .education-content-box {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  flex: 1;
-}
-
-.edu-media-box {
-  width: 100%;
-  max-height: 240px;
-  background: transparent;
-  border-radius: 0;
-  overflow: visible;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-}
-
-.edu-media {
-  max-height: 240px;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 18px rgba(138, 82, 0, 0.14));
+  gap: 6px;
 }
 
 .edu-heading {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
-  color: var(--pastel-yellow-dark);
-  margin-bottom: 6px;
+  color: var(--text-main);
+  margin-bottom: 4px;
 }
 
 .edu-text-paper {
   background: var(--star-gold-bg);
   border-radius: var(--radius-sm);
   border: 1px solid var(--pastel-yellow-border);
-  padding: 14px;
+  padding: 12px 14px;
   text-align: left;
 }
 
@@ -509,7 +463,7 @@
 
 .sheet-footer {
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 10px;
 }
 
 .btn-continue-flat {
@@ -528,10 +482,11 @@
 
 .btn-continue-flat:hover {
   background: #EBB857;
+  transform: translateY(-1px);
 }
 
 .btn-continue-flat:active {
-  transform: translateY(2px);
+  transform: translateY(1px);
   box-shadow: 0 1px 0 var(--star-gold-lip);
 }
 

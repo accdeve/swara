@@ -1,8 +1,9 @@
 /**
  * CardModal
  * Pure Pastel 2D Card Modal Component untuk SWARA.
- * - Memastikan modal dapat ditutup dengan mulus melalui tombol "Lanjutkan Permainan", tombol silang (✕), atau klik backdrop.
- * - Tampilan kartu edukasi dan ilustrasi otentik tanpa potensi stuck/terjebak.
+ * - Memastikan HANYA kartu yang berbalik dalam 3D, bukan seisi container.
+ * - Teks, skenario, dan pilihan respon tetap tegak, jelas, dan stabil (tidak terbalik/mirror).
+ * - Tampilan kartu edukasi dan ilustrasi otentik dalam resolusi HD transparan.
  */
 
 import confetti from 'canvas-confetti';
@@ -17,6 +18,7 @@ export class CardModal {
     this.player = null;
     this.playerName = '';
     this.isFlipped = false;
+    this.hasAnswered = false;
   }
 
   show(card, player, playerName = '') {
@@ -49,13 +51,17 @@ export class CardModal {
 
   toggleFlip() {
     this.isFlipped = !this.isFlipped;
-    const cardInner = this.container.querySelector('.card-flip-inner');
-    if (cardInner) {
+    const flipper = this.container.querySelector('#card3dFlipper');
+    if (flipper) {
       if (this.isFlipped) {
-        cardInner.classList.add('is-flipped');
+        flipper.classList.add('is-flipped');
       } else {
-        cardInner.classList.remove('is-flipped');
+        flipper.classList.remove('is-flipped');
       }
+    }
+    const flipText = this.container.querySelector('#btnFlipText');
+    if (flipText) {
+      flipText.textContent = this.isFlipped ? 'Lihat Sisi Depan' : 'Lihat Sisi Belakang';
     }
     audioManager.playCardFlip();
   }
@@ -63,16 +69,21 @@ export class CardModal {
   flipToBack(isCorrect, selectedOptionId) {
     this.hasAnswered = true;
     this.isFlipped = true;
-    
-    // Pastikan sisi edukasi aktif di belakang
-    const sheetBackCover = this.container.querySelector('#sheetBlueBack');
-    const sheetYellow = this.container.querySelector('#sheetYellow');
-    if (sheetBackCover) sheetBackCover.style.display = 'none';
-    if (sheetYellow) sheetYellow.style.display = 'flex';
 
-    const cardInner = this.container.querySelector('.card-flip-inner');
-    if (cardInner) {
-      cardInner.classList.add('is-flipped');
+    // Pastikan gambar belakang pada flipper adalah kartu edukasi
+    const backImg = this.container.querySelector('#cardBackImg');
+    if (backImg && this.activeCard) {
+      backImg.src = this.activeCard.backImage;
+    }
+
+    // Putar HANYA kartu flipper (bukan container)
+    const flipper = this.container.querySelector('#card3dFlipper');
+    if (flipper) {
+      flipper.classList.add('is-flipped');
+    }
+    const flipText = this.container.querySelector('#btnFlipText');
+    if (flipText) {
+      flipText.textContent = 'Lihat Sisi Depan';
     }
     audioManager.playCardFlip();
 
@@ -82,6 +93,12 @@ export class CardModal {
     } else {
       audioManager.playWrong();
     }
+
+    // Ganti fase di kolom konten tanpa memutar container
+    const phaseQuestion = this.container.querySelector('#phaseQuestion');
+    const phaseEducation = this.container.querySelector('#phaseEducation');
+    if (phaseQuestion) phaseQuestion.style.display = 'none';
+    if (phaseEducation) phaseEducation.style.display = 'flex';
 
     // Tampilkan tombol tutup silang di header setelah dijawab
     const closeBtn = this.container.querySelector('#btnCloseCardModal');
@@ -109,112 +126,91 @@ export class CardModal {
     const isP1 = this.player === 1;
     const playerBadgeText = this.playerName ? `${this.playerName} (${isP1 ? 'Kawan Biru' : 'Kawan Peach'})` : (isP1 ? 'Pemain 1 (Kawan Biru)' : 'Pemain 2 (Kawan Peach)');
     const playerBadgeClass = isP1 ? 'badge-p1-flat' : 'badge-p2-flat';
+    const headerThemeClass = isP1 ? '' : 'header-peach';
 
     this.container.innerHTML = `
       <div class="card-modal-backdrop" id="cardModalBackdrop">
-        <div class="card-modal-frame" id="cardModalFrame">
+        <div class="card-modal-dialog" id="cardModalDialog">
 
-          <div class="card-flip-viewport">
-            <div class="card-flip-inner ${this.isFlipped ? 'is-flipped' : ''}">
-              
-              <!-- SISI DEPAN: KARTU ILUSTRASI (BIRU PASTEL) -->
-              <div class="card-2d-sheet sheet-blue">
-                
-                <div class="sheet-header header-blue">
-                  <div class="sheet-title-group">
-                    <span class="sheet-brand">SWARA</span>
-                    <span class="sheet-number">#${card.id}</span>
-                    <span class="sheet-player-tag ${playerBadgeClass}">🎯 ${playerBadgeText}</span>
+          <!-- HEADER MODAL (STATIS, TIDAK BERBALIK) -->
+          <div class="card-modal-header ${headerThemeClass}">
+            <div class="header-left">
+              <span class="sheet-brand">SWARA</span>
+              <span class="sheet-number">#${card.id}</span>
+              <span class="sheet-player-tag ${playerBadgeClass}">🎯 ${playerBadgeText}</span>
+            </div>
+            <div class="header-right">
+              <span class="sheet-category-pill">${card.category}</span>
+              <button class="btn-close-card hidden" id="btnCloseCardModal" title="Tutup & Lanjutkan">&times;</button>
+            </div>
+          </div>
+
+          <!-- MAIN BODY: DUA KOLOM (KARTU DI KIRI, KONTEN TEKS DI KANAN) -->
+          <div class="card-modal-main">
+
+            <!-- KOLOM KARTU: HANYA KARTU INI YANG BERBALIK 3D -->
+            <div class="card-column">
+              <div class="card-3d-scene" id="card3dScene" title="Klik untuk membalik kartu">
+                <div class="card-3d-flipper ${this.isFlipped ? 'is-flipped' : ''}" id="card3dFlipper">
+                  
+                  <!-- SISI DEPAN: KARTU ILUSTRASI HD -->
+                  <div class="card-face card-face-front">
+                    <img src="${card.frontImage}" alt="${card.title}" class="card-standalone-img" />
                   </div>
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <span class="sheet-category-pill">${card.category}</span>
-                    <button class="btn-flip-card" id="btnFlipPreview" title="Lihat Sisi Belakang">🔄 Belakang</button>
+
+                  <!-- SISI BELAKANG: COVER BIRU (SEBELUM DIJAWAB) / KARTU EDUKASI (SETELAH DIJAWAB) -->
+                  <div class="card-face card-face-back">
+                    <img src="${this.hasAnswered ? card.backImage : (card.coverImage || '/assets/cards/card_blue_back.png')}" alt="Sisi Belakang Kartu" class="card-standalone-img" id="cardBackImg" />
                   </div>
+
                 </div>
-
-                <div class="sheet-body">
-                  <!-- Ilustrasi Asli Gambar Skenario (HD, Tanpa Kotak Border/Background) -->
-                  <div class="illustration-container">
-                    <img src="${card.frontImage}" alt="${card.title}" class="illustration-media" />
-                  </div>
-
-                  <!-- Teks Pertanyaan -->
-                  <div class="question-container">
-                    <p class="question-text">${card.question}</p>
-                  </div>
-
-                  <!-- Pilihan Respon -->
-                  <div class="options-container">
-                    ${card.options.map(opt => `
-                      <button class="flat-option-btn" data-opt-id="${opt.id}">
-                        <span class="opt-key">${opt.id}</span>
-                        <span class="opt-desc">${opt.text}</span>
-                      </button>
-                    `).join('')}
-                  </div>
-                </div>
-
               </div>
 
-              <!-- SISI BELAKANG COVER: KARTU COVER BIRU (SEBELUM DIJAWAB) -->
-              <div class="card-2d-sheet sheet-blue-back" id="sheetBlueBack" style="${this.hasAnswered ? 'display: none;' : ''}">
-                <div class="sheet-header header-blue">
-                  <div class="sheet-title-group">
-                    <span class="sheet-brand">SWARA</span>
-                    <span class="sheet-number">SISI BELAKANG KARTU</span>
-                  </div>
-                  <button class="btn-flip-card-back" id="btnFlipBackToFront">↻ Sisi Depan</button>
+              <button class="btn-toggle-flip" id="btnToggleFlip" type="button" title="Balik Kartu">
+                🔄 <span id="btnFlipText">${this.isFlipped ? 'Lihat Sisi Depan' : 'Lihat Sisi Belakang'}</span>
+              </button>
+            </div>
+
+            <!-- KOLOM KONTEN: SELALU TEGAK & MUDAH DIBACA (TIDAK BERBALIK) -->
+            <div class="content-column">
+
+              <!-- FASE 1: PERTANYAAN & PILIHAN OPSI (SEBELUM DIJAWAB) -->
+              <div class="phase-question" id="phaseQuestion" style="${this.hasAnswered ? 'display: none;' : 'display: flex;'}">
+                <div class="question-container">
+                  <div class="scenario-label">Skenario Interaktif:</div>
+                  <p class="question-text">${card.question}</p>
                 </div>
 
-                <div class="sheet-body cover-body">
-                  <div class="cover-container">
-                    <img src="${card.coverImage || '/assets/cards/card_blue_back.png'}" alt="Cover Belakang SWARA" class="cover-media" />
+                <div class="options-container">
+                  ${card.options.map(opt => `
+                    <button class="flat-option-btn" data-opt-id="${opt.id}">
+                      <span class="opt-key">${opt.id}</span>
+                      <span class="opt-desc">${opt.text}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- FASE 2: HASIL & PENJELASAN EDUKATIF (SETELAH DIJAWAB) -->
+              <div class="phase-education" id="phaseEducation" style="${this.hasAnswered ? 'display: flex;' : 'display: none;'}">
+                <div id="cardResultStatus" class="result-status-box"></div>
+
+                <div class="education-content-box">
+                  <h3 class="edu-heading">${card.explanationTitle}</h3>
+                  <div class="edu-text-paper">
+                    <p>${card.explanationText}</p>
                   </div>
-                  <p class="cover-caption">Kartu Skenario Edukasi SWARA — Sentuhan Aman & Batasan Diri</p>
-                  <button class="btn-primary-pastel btn-cover-proceed" id="btnProceedToQuestion">
-                    Jawab Pertanyaan ➔
+                </div>
+
+                <div class="sheet-footer">
+                  <button class="btn-continue-flat" id="btnContinueGame">
+                    Lanjutkan Permainan ➔
                   </button>
                 </div>
               </div>
 
-              <!-- SISI BELAKANG: KARTU EDUKASI (KUNING PASTEL - SETELAH DIJAWAB) -->
-              <div class="card-2d-sheet sheet-yellow" id="sheetYellow" style="${this.hasAnswered ? 'display: flex;' : 'display: none;'}">
-                
-                <div class="sheet-header header-yellow">
-                  <div class="sheet-title-group">
-                    <span class="sheet-brand-dark">SWARA</span>
-                    <span class="sheet-number-dark">KARTU EDUKASI #${card.id}</span>
-                  </div>
-                  <button class="btn-close-card" id="btnCloseCardModal" title="Tutup & Lanjutkan">&times;</button>
-                </div>
-
-                <div class="sheet-body">
-                  <!-- Status Hasil Jawaban -->
-                  <div id="cardResultStatus" class="result-status-box"></div>
-
-                  <!-- Penjelasan Edukatif -->
-                  <div class="education-content-box">
-                    <div class="edu-media-box">
-                      <img src="${card.backImage}" alt="${card.explanationTitle}" class="edu-media" />
-                    </div>
-                    
-                    <h3 class="edu-heading">${card.explanationTitle}</h3>
-                    
-                    <div class="edu-text-paper">
-                      <p>${card.explanationText}</p>
-                    </div>
-                  </div>
-
-                  <div class="sheet-footer">
-                    <button class="btn-continue-flat" id="btnContinueGame">
-                      Lanjutkan Permainan ➔
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-
             </div>
+
           </div>
 
         </div>
@@ -225,11 +221,28 @@ export class CardModal {
   }
 
   attachEvents() {
+    // Klik pada scene kartu untuk membalik kartu saja
+    const cardScene = this.container.querySelector('#card3dScene');
+    if (cardScene) {
+      cardScene.addEventListener('click', () => {
+        this.toggleFlip();
+      });
+    }
+
+    // Tombol Balik Kartu
+    const toggleFlipBtn = this.container.querySelector('#btnToggleFlip');
+    if (toggleFlipBtn) {
+      toggleFlipBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleFlip();
+      });
+    }
+
     // Event Klik Opsi Jawaban
     const optionButtons = this.container.querySelectorAll('.flat-option-btn');
     optionButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        if (this.isFlipped) return;
+        if (this.hasAnswered) return;
         const optId = btn.getAttribute('data-opt-id');
         optionButtons.forEach(b => b.disabled = true);
         btn.classList.add('selected');
@@ -263,7 +276,7 @@ export class CardModal {
               }
             }
 
-            // Jeda sejenak untuk animasi tombol pilihan sebelum kartu berputar mulus ke belakang
+            // Jeda sejenak untuk animasi tombol pilihan sebelum HANYA kartunya berputar ke sisi edukasi
             setTimeout(() => {
               this.flipToBack(result.isCorrect, optId);
             }, 420);
@@ -271,32 +284,6 @@ export class CardModal {
         }
       });
     });
-
-    // Tombol Balik Kartu (Lihat Cover Belakang)
-    const flipPreviewBtn = this.container.querySelector('#btnFlipPreview');
-    if (flipPreviewBtn) {
-      flipPreviewBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.toggleFlip();
-      });
-    }
-
-    // Tombol Balik ke Depan dari Cover Belakang
-    const flipBackToFrontBtn = this.container.querySelector('#btnFlipBackToFront');
-    if (flipBackToFrontBtn) {
-      flipBackToFrontBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.toggleFlip();
-      });
-    }
-
-    const proceedToQBtn = this.container.querySelector('#btnProceedToQuestion');
-    if (proceedToQBtn) {
-      proceedToQBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.toggleFlip();
-      });
-    }
 
     // Tombol Lanjutkan Permainan
     const continueBtn = this.container.querySelector('#btnContinueGame');
@@ -307,7 +294,7 @@ export class CardModal {
       });
     }
 
-    // Tombol Silang (✕) di Header Kartu Kuning
+    // Tombol Silang (✕) di Header
     const closeBtn = this.container.querySelector('#btnCloseCardModal');
     if (closeBtn) {
       closeBtn.addEventListener('click', (e) => {
@@ -320,7 +307,7 @@ export class CardModal {
     const backdrop = this.container.querySelector('#cardModalBackdrop');
     if (backdrop) {
       backdrop.addEventListener('click', (e) => {
-        if (e.target === backdrop && this.isFlipped) {
+        if (e.target === backdrop && this.hasAnswered) {
           this.closeAndProceed();
         }
       });
