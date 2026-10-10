@@ -4,33 +4,58 @@
   /* Canvas & Soft Surfaces */
   --bg-app: #F5F7FA;
   --surface-card: #FFFFFF;
-  --surface-board: #FAF9F6;
-  --surface-board-inner: #F1F4F8;
+  --surface-board: #F8FAFC;
+  --surface-board-border: #E2E8F0;
+  --surface-board-inner: #EDF3F9;
+  --surface-board-inner-border: #DDE6F0;
 
   /* Pastel Player 1 (Soft Sky Slate) */
   --p1-pastel: #7296C2;
   --p1-pastel-dark: #4A6E99;
   --p1-pastel-bg: #EDF4FA;
   --p1-pastel-active: #DDEBF7;
+  --p1-main: #7296C2;
+  --p1-dark: #4A6E99;
+  --p1-lip: #98B5DA;
 
   /* Pastel Player 2 (Soft Coral Peach) */
   --p2-pastel: #E68E8B;
   --p2-pastel-dark: #C96B68;
   --p2-pastel-bg: #FDF2F1;
   --p2-pastel-active: #FBE4E3;
+  --p2-main: #E68E8B;
+  --p2-dark: #C96B68;
+  --p2-lip: #F2AFAc;
 
   /* Pastel Educational & Info Tones */
   --pastel-yellow: #F4C76C;
   --pastel-yellow-bg: #FEF9EC;
-  --pastel-yellow-dark: #925804;
+  --pastel-yellow-dark: #8A5200;
+  --pastel-yellow-border: #F5DCA5;
+  --star-gold: #F4C76C;
+  --star-gold-bg: #FEF9EC;
+  --star-gold-lip: #D69F3D;
 
   --pastel-mint: #82CFA9;
   --pastel-mint-bg: #EEF9F3;
   --pastel-mint-dark: #1E6B46;
+  --safe-mint-bg: #EEF9F3;
 
-  --pastel-blue-banner: #798CB0;
-  --pastel-grid-line: #BAC7D8;
-  --pastel-grid-subtle: #DCE4ED;
+  /* Board Grid & Loops (Senada Pastel) */
+  --board-loop-outer: #7296C2;
+  --board-loop-inner: #97B2D4;
+  --board-loop-hover: #5075A3;
+  --board-grid: #BAC7D8;
+  --board-diagonal: #CBD7E6;
+  --board-diagonal-subtle: #DCE5EE;
+  --board-node: #94A6BE;
+  --board-trail: #F4C76C;
+
+  /* Card Colors */
+  --card-blue-banner: #7296C2;
+  --card-yellow-banner: #F4C76C;
+  --surface-paper: #F8FAFD;
+  --transition-tactile: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Typography */
   --text-main: #334155;
@@ -38,14 +63,15 @@
   --text-subtle: #94A3B8;
   --text-white: #FFFFFF;
 
-  /* Pure Soft Elevation */
+  /* Elevation & Shadows */
   --shadow-pastel: 0 4px 16px rgba(100, 116, 139, 0.06);
   --shadow-card: 0 8px 24px rgba(100, 116, 139, 0.08);
 
   /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  --radius-xs: 8px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
   --radius-full: 9999px;
 
   /* Font */

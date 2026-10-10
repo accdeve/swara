@@ -1,64 +1,45 @@
-/* Authentic Children's Educational Flashcard Styling (Tactile & Non-AI-Slop) */
+/* Pure Pastel Children's Educational Flashcard Styling */
 
 .card-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(45, 55, 72, 0.5);
+  background: rgba(30, 41, 59, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 16px;
-  animation: flatFadeIn 0.15s ease;
+  animation: flatFadeIn 0.2s ease;
+  backdrop-filter: blur(3px);
 }
 
 .card-modal-frame {
   width: 100%;
-  max-width: 540px;
+  max-width: 580px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  animation: cardPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.modal-top-bar {
-  text-align: center;
-  color: #FFFFFF;
+@keyframes cardPopIn {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.player-turn-flat-tag {
-  display: inline-block;
-  padding: 5px 14px;
-  border-radius: var(--radius-xs);
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
-}
-
-.badge-p1-flat {
-  background: var(--p1-main);
-  color: #FFFFFF;
-}
-
-.badge-p2-flat {
-  background: var(--p2-main);
-  color: #FFFFFF;
-}
-
-.modal-instruction {
-  font-size: 13px;
-  color: #F1F5F9;
-  margin: 0;
-}
-
-/* Flashcard 3D/2D Viewport */
+/* Flashcard 3D/2D Viewport & Flip Container (Ukuran Lebih Besar & Megah) */
 .card-flip-viewport {
-  perspective: 1200px;
+  perspective: 1400px;
   width: 100%;
-  max-width: 480px;
-  height: 520px;
-  max-height: 84vh;
+  max-width: 580px;
+  height: 640px;
+  max-height: 90vh;
 }
 
 .card-flip-inner {
@@ -66,68 +47,84 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 12px 28px rgba(74, 94, 122, 0.16));
 }
 
 .card-flip-inner.is-flipped {
   transform: rotateY(180deg);
+  filter: drop-shadow(0 14px 32px rgba(138, 82, 0, 0.16));
 }
 
-/* Flashcard Body (Physical Printed Flashcard Look) */
+/* Flashcard Body Sheets (Sisi Depan & Belakang) */
 .card-2d-sheet {
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 0 #D5CBB8;
   overflow: hidden;
   background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(100, 116, 139, 0.08);
 }
 
 /* SISI DEPAN: KARTU BIRU (ILUSTRASI) */
 .sheet-blue {
   background: #FFFFFF;
+  border: 2px solid #D6E4F0;
 }
 
 .header-blue {
-  background: var(--card-blue-banner);
+  background: var(--p1-pastel);
   color: #FFFFFF;
-  padding: 10px 16px;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .sheet-title-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .sheet-brand {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.5px;
 }
 
 .sheet-number {
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: 12.5px;
+  font-weight: 700;
   opacity: 0.95;
 }
 
-.sheet-category-pill {
-  font-size: 10.5px;
+.sheet-player-tag {
+  font-size: 11.5px;
   font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
   background: rgba(255, 255, 255, 0.22);
-  padding: 2px 8px;
-  border-radius: var(--radius-xs);
+  color: #FFFFFF;
+}
+
+.sheet-category-pill {
+  font-size: 11.5px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.24);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
 }
 
 .sheet-body {
-  padding: 14px 16px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -137,15 +134,16 @@
 
 .illustration-container {
   width: 100%;
-  height: 150px;
+  height: 210px;
   background: var(--surface-paper);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   flex-shrink: 0;
+  border: 1px solid #EBF1F8;
 }
 
 .illustration-media {
@@ -155,119 +153,185 @@
 }
 
 .question-container {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .question-text {
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 700;
   color: var(--text-main);
-  line-height: 1.4;
+  line-height: 1.48;
   margin: 0;
 }
 
-/* Tactile Response Buttons */
+/* Animasi Pilihan Respon / Options */
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   margin-top: auto;
 }
 
 .flat-option-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
+  gap: 12px;
+  padding: 12px 16px;
   background: var(--surface-paper);
-  border: none;
-  border-radius: var(--radius-xs);
+  border: 1.5px solid #E2E8F0;
+  border-radius: var(--radius-sm);
   text-align: left;
   cursor: pointer;
-  box-shadow: 0 2.5px 0 #DDD6C8;
+  box-shadow: 0 2.5px 0 #CBD5E1;
   transition: var(--transition-tactile);
+  animation: optionSlideIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.flat-option-btn:nth-child(1) { animation-delay: 0.05s; }
+.flat-option-btn:nth-child(2) { animation-delay: 0.12s; }
+.flat-option-btn:nth-child(3) { animation-delay: 0.19s; }
+
+@keyframes optionSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .flat-option-btn:hover:not(:disabled) {
-  background: var(--surface-tray-p1);
-  box-shadow: 0 2.5px 0 var(--p1-lip);
+  background: var(--p1-pastel-bg);
+  border-color: var(--p1-pastel);
+  box-shadow: 0 3.5px 0 var(--p1-lip);
+  transform: translateY(-2px);
 }
 
 .flat-option-btn:active:not(:disabled) {
-  transform: translateY(2px);
-  box-shadow: 0 0.5px 0 #DDD6C8;
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #CBD5E1;
 }
 
 .flat-option-btn.selected {
-  background: var(--surface-tray-p1);
+  background: var(--p1-pastel-bg);
+  border-color: var(--p1-pastel);
   box-shadow: 0 1px 0 var(--p1-lip);
 }
 
+/* Feedback Animasi Saat Opsi Dipilih */
+.flat-option-btn.is-correct {
+  background: var(--pastel-mint-bg) !important;
+  border-color: var(--pastel-mint) !important;
+  box-shadow: 0 3.5px 0 #6BB892 !important;
+  animation: pulseCorrect 0.4s ease;
+}
+
+.flat-option-btn.is-correct .opt-key {
+  background: var(--pastel-mint) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 1.5px 0 var(--pastel-mint-dark) !important;
+}
+
+.flat-option-btn.is-wrong {
+  background: var(--p2-pastel-bg) !important;
+  border-color: var(--p2-pastel) !important;
+  box-shadow: 0 3.5px 0 #D17C79 !important;
+  animation: shakeSoft 0.4s ease;
+}
+
+.flat-option-btn.is-wrong .opt-key {
+  background: var(--p2-pastel) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 1.5px 0 var(--p2-pastel-dark) !important;
+}
+
+.flat-option-btn.is-hint-correct {
+  background: var(--pastel-mint-bg) !important;
+  border: 1.5px dashed var(--pastel-mint) !important;
+  opacity: 0.95;
+}
+
+@keyframes pulseCorrect {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.025); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shakeSoft {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
 .opt-key {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-xs);
   background: #FFFFFF;
   color: var(--text-main);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 1.5px 0 #DDD6C8;
+  box-shadow: 0 1.5px 0 #CBD5E1;
+  transition: var(--transition-tactile);
 }
 
 .flat-option-btn:hover:not(:disabled) .opt-key {
-  background: var(--p1-main);
+  background: var(--p1-pastel);
   color: #FFFFFF;
   box-shadow: 0 1.5px 0 var(--p1-dark);
 }
 
 .opt-desc {
-  font-size: 12.5px;
+  font-size: 13.5px;
   color: var(--text-main);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 /* SISI BELAKANG: KARTU KUNING (EDUKASI) */
 .sheet-yellow {
   background: #FFFFFF;
   transform: rotateY(180deg);
+  border: 2px solid #F8E7C0;
 }
 
 .header-yellow {
-  background: var(--card-yellow-banner);
-  padding: 12px 18px;
+  background: var(--pastel-yellow);
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .sheet-brand-dark {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
-  color: #573602;
+  color: var(--pastel-yellow-dark);
   letter-spacing: 0.5px;
 }
 
 .sheet-number-dark {
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
-  color: #573602;
-  opacity: 0.9;
+  color: var(--pastel-yellow-dark);
+  opacity: 0.95;
 }
 
 .btn-close-card {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.45);
   border: none;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-xs);
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
   font-size: 18px;
   font-weight: 800;
-  color: #573602;
+  color: var(--pastel-yellow-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -277,25 +341,52 @@
 }
 
 .btn-close-card:hover {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.75);
+  transform: scale(1.1);
+}
+
+/* Animasi Muncul Konten Sisi Belakang */
+.card-flip-inner.is-flipped .sheet-yellow .result-status-box {
+  animation: eduReveal 0.4s 0.15s ease backwards;
+}
+
+.card-flip-inner.is-flipped .sheet-yellow .education-content-box {
+  animation: eduReveal 0.45s 0.22s ease backwards;
+}
+
+.card-flip-inner.is-flipped .sheet-yellow .sheet-footer {
+  animation: eduReveal 0.45s 0.3s ease backwards;
+}
+
+@keyframes eduReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .result-status-box {
-  padding: 10px 14px;
-  border-radius: var(--radius-xs);
-  font-size: 13px;
+  padding: 11px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .status-correct {
   background: var(--safe-mint-bg);
-  color: #1A5938;
+  color: #1E6B46;
+  border: 1px solid #C7EBD7;
 }
 
 .status-incorrect {
   background: var(--star-gold-bg);
-  color: #7A4C05;
+  color: var(--pastel-yellow-dark);
+  border: 1px solid var(--pastel-yellow-border);
 }
 
 .education-content-box {
@@ -308,14 +399,15 @@
 
 .edu-media-box {
   width: 100%;
-  height: 130px;
+  height: 180px;
   background: var(--surface-paper);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-sm);
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #F5EADB;
 }
 
 .edu-media {
@@ -325,39 +417,40 @@
 }
 
 .edu-heading {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
-  color: #573602;
-  margin-bottom: 4px;
+  color: var(--pastel-yellow-dark);
+  margin-bottom: 6px;
 }
 
 .edu-text-paper {
   background: var(--star-gold-bg);
-  border-radius: var(--radius-xs);
-  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--pastel-yellow-border);
+  padding: 14px;
   text-align: left;
 }
 
 .edu-text-paper p {
-  font-size: 13px;
-  color: #573602;
-  line-height: 1.45;
+  font-size: 13.5px;
+  color: var(--pastel-yellow-dark);
+  line-height: 1.5;
   margin: 0;
 }
 
 .sheet-footer {
   margin-top: auto;
-  padding-top: 10px;
+  padding-top: 12px;
 }
 
 .btn-continue-flat {
   width: 100%;
-  padding: 11px;
-  background: var(--star-gold);
-  color: #FFFFFF;
-  border: none;
-  border-radius: var(--radius-xs);
-  font-size: 13.5px;
+  padding: 12px;
+  background: var(--pastel-yellow);
+  color: var(--pastel-yellow-dark);
+  border: 1px solid var(--pastel-yellow-border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 3px 0 var(--star-gold-lip);
@@ -365,7 +458,7 @@
 }
 
 .btn-continue-flat:hover {
-  background: #CC840E;
+  background: #EBB857;
 }
 
 .btn-continue-flat:active {

@@ -90,11 +90,6 @@ export class CardModal {
     this.container.innerHTML = `
       <div class="card-modal-backdrop" id="cardModalBackdrop">
         <div class="card-modal-frame" id="cardModalFrame">
-          
-          <div class="modal-top-bar">
-            <span class="player-turn-flat-tag ${playerBadgeClass}">🎯 ${playerBadgeText} Berhasil Memakan Pion!</span>
-            <p class="modal-instruction">Pilih respon terbaik pada situasi di bawah untuk meraih <strong>+4 Bintang ⭐</strong></p>
-          </div>
 
           <div class="card-flip-viewport">
             <div class="card-flip-inner ${this.isFlipped ? 'is-flipped' : ''}">
@@ -105,7 +100,8 @@ export class CardModal {
                 <div class="sheet-header header-blue">
                   <div class="sheet-title-group">
                     <span class="sheet-brand">SWARA</span>
-                    <span class="sheet-number">KARTU ILUSTRASI #${card.id}</span>
+                    <span class="sheet-number">#${card.id}</span>
+                    <span class="sheet-player-tag ${playerBadgeClass}">🎯 ${playerBadgeText}</span>
                   </div>
                   <span class="sheet-category-pill">${card.category}</span>
                 </div>
@@ -140,7 +136,7 @@ export class CardModal {
                 <div class="sheet-header header-yellow">
                   <div class="sheet-title-group">
                     <span class="sheet-brand-dark">SWARA</span>
-                    <span class="sheet-number-dark">KARTU EDUKASI</span>
+                    <span class="sheet-number-dark">KARTU EDUKASI #${card.id}</span>
                   </div>
                   <button class="btn-close-card" id="btnCloseCardModal" title="Tutup & Lanjutkan">&times;</button>
                 </div>
@@ -194,6 +190,21 @@ export class CardModal {
         if (this.onAnswerSubmit) {
           const result = this.onAnswerSubmit(optId);
           if (result) {
+            // Animasi feedback visual langsung pada tombol pilihan
+            if (result.isCorrect) {
+              btn.classList.add('is-correct');
+            } else {
+              btn.classList.add('is-wrong');
+              // Berikan hint lembut pada opsi yang tepat
+              if (this.activeCard && this.activeCard.options) {
+                const correctOpt = this.activeCard.options.find(o => o.isCorrect);
+                if (correctOpt) {
+                  const correctBtn = this.container.querySelector(`.flat-option-btn[data-opt-id="${correctOpt.id}"]`);
+                  if (correctBtn) correctBtn.classList.add('is-hint-correct');
+                }
+              }
+            }
+
             const statusEl = this.container.querySelector('#cardResultStatus');
             if (statusEl) {
               if (result.isCorrect) {
@@ -204,9 +215,11 @@ export class CardModal {
                 statusEl.innerHTML = `💡 <strong>Hampir Tepat!</strong> Simak penjelasan penting di bawah:`;
               }
             }
+
+            // Jeda sejenak untuk animasi tombol pilihan sebelum kartu berputar mulus ke belakang
             setTimeout(() => {
               this.flipToBack(result.isCorrect, optId);
-            }, 200);
+            }, 420);
           }
         }
       });

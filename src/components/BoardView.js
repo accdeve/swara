@@ -131,8 +131,8 @@ export class BoardView {
     this.isAnimating = true;
     const isCapture = move.type === 'CAPTURE';
     const isP1 = playerPiece === PLAYER_1;
-    const fillColor = isP1 ? '#5882B5' : '#DE7B77';
-    const strokeColor = isP1 ? '#3E6494' : '#C25F5B';
+    const fillColor = isP1 ? '#7296C2' : '#E68E8B';
+    const strokeColor = isP1 ? '#4A6E99' : '#C96B68';
     const symbolIcon = isP1 ? '🌸' : '🍑';
 
     // Sembunyikan bidak awal di papan selama terbang
@@ -213,7 +213,7 @@ export class BoardView {
           impact.setAttribute('cx', targetPt.x);
           impact.setAttribute('cy', targetPt.y);
           impact.setAttribute('r', '18');
-          impact.setAttribute('fill', '#DE7B77');
+          impact.setAttribute('fill', '#E68E8B');
           impact.setAttribute('class', 'capture-impact-pulse');
           animLayer.appendChild(impact);
         }
@@ -248,34 +248,31 @@ export class BoardView {
     let svgHtml = `
       <svg class="surakarta-svg" viewBox="0 0 ${this.size} ${this.size}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         
-        <!-- Papan Dasar Kayu / Linen Hangat (Tactile Wooden Base) -->
-        <rect x="20" y="20" width="${this.size - 40}" height="${this.size - 40}" rx="24" fill="#FAF6ED" />
-        
-        <!-- Arena Lapangan Dalam (Matte Field Tint) -->
-        <rect x="${minX - 10}" y="${minY - 10}" width="${5 * s + 20}" height="${5 * s + 20}" rx="12" fill="#F2EDE2" />
+        <!-- Papan Dasar Seamless Senada (Satu Permukaan Mulus Tanpa Kotak Kontras) -->
+        <rect x="20" y="20" width="${this.size - 40}" height="${this.size - 40}" rx="24" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" />
 
         <!-- 8 Corner Loops of Surakarta (100% Utuh & Terlihat Jelas) -->
         <g class="surakarta-loops" fill="none" stroke-linecap="round">
           
           <!-- Top-Left Corner Loops -->
-          <path d="M ${minX + s} ${minY} A ${s} ${s} 0 1 0 ${minX} ${minY + s}" stroke="#6F86AB" stroke-width="3" class="flat-loop-path" />
-          <path d="M ${minX + 2*s} ${minY} A ${2*s} ${2*s} 0 1 0 ${minX} ${minY + 2*s}" stroke="#8FA4C3" stroke-width="2.5" class="flat-loop-path" />
+          <path d="M ${minX + s} ${minY} A ${s} ${s} 0 1 0 ${minX} ${minY + s}" stroke="#7296C2" stroke-width="3" class="flat-loop-path" />
+          <path d="M ${minX + 2*s} ${minY} A ${2*s} ${2*s} 0 1 0 ${minX} ${minY + 2*s}" stroke="#7296C2" stroke-width="2.5" class="flat-loop-path" />
 
           <!-- Top-Right Corner Loops -->
-          <path d="M ${maxX} ${minY + s} A ${s} ${s} 0 1 0 ${maxX - s} ${minY}" stroke="#6F86AB" stroke-width="3" class="flat-loop-path" />
-          <path d="M ${maxX} ${minY + 2*s} A ${2*s} ${2*s} 0 1 0 ${maxX - 2*s} ${minY}" stroke="#8FA4C3" stroke-width="2.5" class="flat-loop-path" />
+          <path d="M ${maxX} ${minY + s} A ${s} ${s} 0 1 0 ${maxX - s} ${minY}" stroke="#7296C2" stroke-width="3" class="flat-loop-path" />
+          <path d="M ${maxX} ${minY + 2*s} A ${2*s} ${2*s} 0 1 0 ${maxX - 2*s} ${minY}" stroke="#7296C2" stroke-width="2.5" class="flat-loop-path" />
 
           <!-- Bottom-Left Corner Loops -->
-          <path d="M ${minX} ${maxY - s} A ${s} ${s} 0 1 0 ${minX + s} ${maxY}" stroke="#6F86AB" stroke-width="3" class="flat-loop-path" />
-          <path d="M ${minX} ${maxY - 2*s} A ${2*s} ${2*s} 0 1 0 ${minX + 2*s} ${maxY}" stroke="#8FA4C3" stroke-width="2.5" class="flat-loop-path" />
+          <path d="M ${minX} ${maxY - s} A ${s} ${s} 0 1 0 ${minX + s} ${maxY}" stroke="#7296C2" stroke-width="3" class="flat-loop-path" />
+          <path d="M ${minX} ${maxY - 2*s} A ${2*s} ${2*s} 0 1 0 ${minX + 2*s} ${maxY}" stroke="#7296C2" stroke-width="2.5" class="flat-loop-path" />
 
           <!-- Bottom-Right Corner Loops -->
-          <path d="M ${maxX - s} ${maxY} A ${s} ${s} 0 1 0 ${maxX} ${maxY - s}" stroke="#6F86AB" stroke-width="3" class="flat-loop-path" />
-          <path d="M ${maxX - 2*s} ${maxY} A ${2*s} ${2*s} 0 1 0 ${maxX} ${maxY - 2*s}" stroke="#8FA4C3" stroke-width="2.5" class="flat-loop-path" />
+          <path d="M ${maxX - s} ${maxY} A ${s} ${s} 0 1 0 ${maxX} ${maxY - s}" stroke="#7296C2" stroke-width="3" class="flat-loop-path" />
+          <path d="M ${maxX - 2*s} ${maxY} A ${2*s} ${2*s} 0 1 0 ${maxX} ${maxY - 2*s}" stroke="#7296C2" stroke-width="2.5" class="flat-loop-path" />
         </g>
 
-        <!-- Garis Grid Surakarta (Horizontal & Vertikal) -->
-        <g class="surakarta-grid" stroke="#A8B5C8" stroke-width="2" stroke-linecap="round">
+        <!-- Garis Grid Surakarta (Senada dengan Lingkaran Sudut) -->
+        <g class="surakarta-grid" stroke="#7296C2" stroke-width="2.5" stroke-linecap="round">
     `;
 
     // Horizontal grid
@@ -292,12 +289,12 @@ export class BoardView {
 
     // Garis Diagonal Halus
     svgHtml += `
-      <line x1="${minX}" y1="${minY}" x2="${maxX}" y2="${maxY}" stroke="#CBD5E1" stroke-width="1.5" />
-      <line x1="${minX}" y1="${maxY}" x2="${maxX}" y2="${minY}" stroke="#CBD5E1" stroke-width="1.5" />
-      <line x1="${minX + s}" y1="${minY}" x2="${maxX}" y2="${maxY - s}" stroke="#D8E0EB" stroke-width="1.2" stroke-dasharray="3,3"/>
-      <line x1="${minX}" y1="${minY + s}" x2="${maxX - s}" y2="${maxY}" stroke="#D8E0EB" stroke-width="1.2" stroke-dasharray="3,3"/>
-      <line x1="${maxX - s}" y1="${minY}" x2="${minX}" y2="${maxY - s}" stroke="#D8E0EB" stroke-width="1.2" stroke-dasharray="3,3"/>
-      <line x1="${maxX}" y1="${minY + s}" x2="${minX + s}" y2="${maxY}" stroke="#D8E0EB" stroke-width="1.2" stroke-dasharray="3,3"/>
+      <line x1="${minX}" y1="${minY}" x2="${maxX}" y2="${maxY}" stroke="#CBD7E6" stroke-width="1.5" />
+      <line x1="${minX}" y1="${maxY}" x2="${maxX}" y2="${minY}" stroke="#CBD7E6" stroke-width="1.5" />
+      <line x1="${minX + s}" y1="${minY}" x2="${maxX}" y2="${maxY - s}" stroke="#DCE5EE" stroke-width="1.2" stroke-dasharray="3,3"/>
+      <line x1="${minX}" y1="${minY + s}" x2="${maxX - s}" y2="${maxY}" stroke="#DCE5EE" stroke-width="1.2" stroke-dasharray="3,3"/>
+      <line x1="${maxX - s}" y1="${minY}" x2="${minX}" y2="${maxY - s}" stroke="#DCE5EE" stroke-width="1.2" stroke-dasharray="3,3"/>
+      <line x1="${maxX}" y1="${minY + s}" x2="${minX + s}" y2="${maxY}" stroke="#DCE5EE" stroke-width="1.2" stroke-dasharray="3,3"/>
     </g>`;
 
     // Jejak Langkah Trail
@@ -305,7 +302,7 @@ export class BoardView {
       const pathD = this.buildSvgPathFromMove({ path: activeTrail });
       if (pathD) {
         svgHtml += `
-          <path d="${pathD}" fill="none" stroke="#E59819" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5,5" class="flat-trail-line"/>
+          <path d="${pathD}" fill="none" stroke="#F4C76C" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5,5" class="flat-trail-line"/>
         `;
       }
     }
@@ -319,18 +316,18 @@ export class BoardView {
         const moveObj = moveLookup.get(`${r},${c}`);
         const isCapture = moveObj && moveObj.type === 'CAPTURE';
 
-        svgHtml += `<circle cx="${x}" cy="${y}" r="3.5" fill="#9BA8BA" class="grid-dot" />`;
+        svgHtml += `<circle cx="${x}" cy="${y}" r="3.5" fill="#7296C2" class="grid-dot" />`;
 
         if (isMoveTarget) {
           if (isCapture) {
             svgHtml += `
-              <circle cx="${x}" cy="${y}" r="22" fill="rgba(222, 123, 119, 0.25)" stroke="#DE7B77" stroke-width="2" stroke-dasharray="4,3" class="static-capture-ring" data-r="${r}" data-c="${c}"/>
-              <circle cx="${x}" cy="${y}" r="5.5" fill="#C25F5B" data-r="${r}" data-c="${c}"/>
+              <circle cx="${x}" cy="${y}" r="22" fill="rgba(230, 142, 139, 0.22)" stroke="#E68E8B" stroke-width="2" stroke-dasharray="4,3" class="static-capture-ring" data-r="${r}" data-c="${c}"/>
+              <circle cx="${x}" cy="${y}" r="5.5" fill="#C96B68" data-r="${r}" data-c="${c}"/>
             `;
           } else {
             svgHtml += `
-              <circle cx="${x}" cy="${y}" r="15" fill="rgba(88, 130, 181, 0.25)" stroke="#5882B5" stroke-width="1.8" stroke-dasharray="3,3" class="static-move-ring" data-r="${r}" data-c="${c}"/>
-              <circle cx="${x}" cy="${y}" r="4.5" fill="#3E6494" data-r="${r}" data-c="${c}"/>
+              <circle cx="${x}" cy="${y}" r="15" fill="rgba(114, 150, 194, 0.22)" stroke="#7296C2" stroke-width="1.8" stroke-dasharray="3,3" class="static-move-ring" data-r="${r}" data-c="${c}"/>
+              <circle cx="${x}" cy="${y}" r="4.5" fill="#4A6E99" data-r="${r}" data-c="${c}"/>
             `;
           }
         }
@@ -348,8 +345,8 @@ export class BoardView {
           const isSelected = selectedPiece && selectedPiece.r === r && selectedPiece.c === c;
           const isP1 = piece === PLAYER_1;
 
-          const fillColor = isP1 ? '#5882B5' : '#DE7B77';
-          const strokeColor = isP1 ? '#3E6494' : '#C25F5B';
+          const fillColor = isP1 ? '#7296C2' : '#E68E8B';
+          const strokeColor = isP1 ? '#4A6E99' : '#C96B68';
           const symbolIcon = isP1 ? '🌸' : '🍑';
 
           if (isSelected) {
